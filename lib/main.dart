@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:maidscc_test/models/task_model.dart';
 import 'package:maidscc_test/screens/home_page_screen/home_page_screen.dart';
+import 'package:maidscc_test/screens/login_screen/login_screen.dart';
+import 'package:maidscc_test/shared/dio_helper.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  DioHelper.init();
+  //print('main::: ${await DioHelper.login(userName: 'emilys', password: 'emilyspass')}');
+  await MyDatabase.open();
+  //await MyDatabase.deleteDatabase();
+  //print('in main ${await MyDatabase.db.rawQuery('SELECT * FROM todo')}');
   runApp(const MyApp());
 }
 
@@ -33,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: LoginScreen(),
     );
   }
 }
