@@ -30,7 +30,7 @@ void main() async {
       var p1 = await MyDatabase.db.query(tableTodoTask);
       var t = await MyDatabase.delete(todo.id!, tableName: tableTodoTask);
       var p2 = await MyDatabase.db.query(tableTodoTask);
-      expect(p2.length, p1.length - 1);
+      expect(p2.length, p1.length - t);
     });
   });
 }
