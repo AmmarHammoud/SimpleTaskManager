@@ -1,16 +1,6 @@
-# maidscc_test
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Tasks manager
+This is a test application I was asked to do in order to have the chance to work in a company.
+It mainly consists of three parts: auth (login), local tasks, and APIs tasks.
+The tasks may be: inserted, updated, or deleted.
+As it is a part of a test, I have not cared much about the UI. It is just a simple app get the job done.
+Moreover, I skipped all the identical parts of code.
