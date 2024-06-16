@@ -9,6 +9,7 @@ class MyDatabase {
   static Future<String> get fullPath async {
     const name = 'task_manager.db';
     final path = await getDatabasesPath();
+    print(path + name);
     return join(path, name);
   }
 
@@ -21,17 +22,22 @@ create table if not exists $tableTodo (
   $columnTitle text not null,
   $columnDone integer not null)
 ''');
+          await db.execute('''
+create table if not exists $tableTodoTask (
+  $columnId integer primary key autoincrement,
+  $columnTitle text not null,
+  $columnDone integer not null)
+''');
         });
   }
 
-  static Future<Todo> insert(Todo todo) async {
-    todo.id = await db.insert(tableTodo, todo.toMap());
-    print('in insert: $todo');
+  static Future<Todo> insert(Todo todo, {String tableName = tableTodo}) async {
+    todo.id = await db.insert(tableName, todo.toMap());
     return todo;
   }
 
-  static Future<Todo?> getTodo(int id) async {
-    List<Map<String, dynamic>> maps = await db.query(tableTodo,
+  static Future<Todo?> getTodo(int id, {String tableName = tableTodo}) async {
+    List<Map<String, dynamic>> maps = await db.query(tableName,
         columns: [columnId, columnDone, columnTitle],
         where: '$columnId = ?',
         whereArgs: [id]);
@@ -41,17 +47,17 @@ create table if not exists $tableTodo (
     return null;
   }
 
-  static Future<List<Todo>> fetchAll() async {
-    final todos = await db.rawQuery('''SELECT * FROM $tableTodo''');
+  static Future<List<Todo>> fetchAll({String tableName = tableTodo}) async {
+    final todos = await db.rawQuery('''SELECT * FROM $tableName''');
     return todos.map((todo) => Todo.fromSqfliteDatabase(todo)).toList();
   }
 
-  static Future<int> delete(int id) async {
-    return await db.delete(tableTodo, where: '$columnId = ?', whereArgs: [id]);
+  static Future<int> delete(int id, {String tableName = tableTodo}) async {
+    return await db.delete(tableName, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  static Future<int> update(Todo todo) async {
-    return await db.update(tableTodo, todo.toMap(),
+  static Future<int> update(Todo todo, {String tableName = tableTodo}) async {
+    return await db.update(tableName, todo.toMap(),
         where: '$columnId = ?', whereArgs: [todo.id]);
   }
 
@@ -60,11 +66,6 @@ create table if not exists $tableTodo (
   ///If you want to release resources, you can close the database.
   static Future close() async => db.close();
 
-  static Future<dynamic> test() async{
-    insert(Todo(id: 0, title: 'go to  gym', done: false));
-    insert(Todo(id: 1, title: 'go to  market', done: false));
-    return await db.rawQuery('''SELECT * FROM $tableTodo''');
-  }
   static Future<dynamic> clear() async{
     //return await db.
   }
