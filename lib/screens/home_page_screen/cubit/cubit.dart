@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maidscc_test/models/task_model.dart';
 import 'package:maidscc_test/screens/home_page_screen/cubit/states.dart';
 import 'package:maidscc_test/shared/dio_helper.dart';
+
+import '../../../database/database_service.dart';
 
 class HomePageCubit extends Cubit<HomePageScreenStates> {
   HomePageCubit() : super(HomePageScreenInitialState());
@@ -10,19 +11,6 @@ class HomePageCubit extends Cubit<HomePageScreenStates> {
   static HomePageCubit get(context) => BlocProvider.of(context);
 
   List<Todo> tasks = [];
-
-  //Icon iconTaskState = const Icon(Icons.square_outlined);
-
-  // initDatabase() {
-  //   emit(HomePageScreenLoadingState());
-  //   MyDatabase.open().then((value) {
-  //     print(value);
-  //     emit(HomePageScreenSuccessState());
-  //   }).onError((error, stackTrace) {
-  //     print(error.toString());
-  //     emit(HomePageScreenErrorState());
-  //   });
-  // }
 
   ///fetch the tasks using the API
   fetchAllTasksAPI() {

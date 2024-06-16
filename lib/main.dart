@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maidscc_test/models/task_model.dart';
-import 'package:maidscc_test/screens/home_page_screen/home_page_screen.dart';
 import 'package:maidscc_test/screens/login_screen/login_screen.dart';
 import 'package:maidscc_test/shared/dio_helper.dart';
+import 'database/database_service.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
